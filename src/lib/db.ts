@@ -73,7 +73,7 @@ async function seedIfEmpty() {
       { key: "shop_phone", value: "+255 655 786 630" },
       { key: "currency", value: "TZS" },
       { key: "vat_rate", value: "18" },
-      { key: "receipt_footer", value: "Asante kwa kununua Blessing Mall!" },
+      { key: "receipt_footer", value: "Thank you for shopping at Blessing Mall." },
     ],
   });
 

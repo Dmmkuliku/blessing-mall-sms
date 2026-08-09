@@ -39,55 +39,55 @@ const NAV: NavItem[] = [
   {
     href: "/dashboard",
     label: "Dashboard",
-    hint: "Muhtasari",
+    hint: "Daily overview",
     icon: <LayoutDashboard className="h-4 w-4" />,
   },
   {
     href: "/pos",
-    label: "POS / Mauzo",
-    hint: "Point of sale",
+    label: "Point of Sale",
+    hint: "Checkout & receipts",
     icon: <ShoppingCart className="h-4 w-4" />,
   },
   {
     href: "/products",
-    label: "Products",
-    hint: "Stoki",
+    label: "Inventory",
+    hint: "Products & stock",
     icon: <Package className="h-4 w-4" />,
   },
   {
     href: "/purchases",
     label: "Purchases",
-    hint: "Manunuzi",
+    hint: "Goods received",
     icon: <ClipboardList className="h-4 w-4" />,
   },
   {
     href: "/suppliers",
     label: "Suppliers",
-    hint: "Wasambazaji",
+    hint: "Vendor records",
     icon: <Truck className="h-4 w-4" />,
   },
   {
     href: "/expenses",
     label: "Expenses",
-    hint: "Gharama",
+    hint: "Operating costs",
     icon: <Wallet className="h-4 w-4" />,
   },
   {
     href: "/reports",
     label: "Reports",
-    hint: "Ripoti",
+    hint: "Sales & cash flow",
     icon: <BarChart3 className="h-4 w-4" />,
   },
   {
     href: "/staff",
     label: "Staff",
-    hint: "Wafanyakazi",
+    hint: "User accounts",
     icon: <Users className="h-4 w-4" />,
   },
   {
     href: "/settings",
     label: "Settings",
-    hint: "Mipangilio",
+    hint: "Shop preferences",
     icon: <Settings className="h-4 w-4" />,
   },
 ];
@@ -170,7 +170,7 @@ export function AppShell({ children }: AppShellProps) {
               <p className="font-display text-lg font-semibold leading-tight text-forest">
                 Blessing Mall
               </p>
-              <p className="truncate text-xs text-muted">SMS · Tanzania</p>
+              <p className="truncate text-xs text-muted">Operations · Tanzania</p>
             </div>
             <button
               type="button"
@@ -266,7 +266,7 @@ export function AppShell({ children }: AppShellProps) {
             </div>
             <div className="ml-auto hidden items-center gap-2 sm:flex">
               <span className="rounded-full bg-gold-soft px-3 py-1 text-xs font-medium text-charcoal">
-                TZS · TZ
+                Currency: TZS
               </span>
             </div>
           </header>

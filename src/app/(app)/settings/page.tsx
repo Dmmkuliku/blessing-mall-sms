@@ -5,12 +5,16 @@ import { api, ApiError } from "@/lib/api";
 import type { ShopSettings } from "@/lib/types";
 
 const FIELDS: { key: keyof ShopSettings; label: string; hint?: string }[] = [
-  { key: "shop_name", label: "Shop name" },
+  { key: "shop_name", label: "Business name" },
   { key: "shop_location", label: "Location" },
-  { key: "shop_phone", label: "Phone" },
-  { key: "currency", label: "Currency" },
+  { key: "shop_phone", label: "Phone number" },
+  { key: "currency", label: "Currency code" },
   { key: "vat_rate", label: "VAT rate (%)", hint: "Tanzania standard VAT is 18%" },
-  { key: "receipt_footer", label: "Receipt footer" },
+  {
+    key: "receipt_footer",
+    label: "Receipt footer message",
+    hint: "Shown at the bottom of printed customer receipts",
+  },
 ];
 
 export default function SettingsPage() {
@@ -57,10 +61,11 @@ export default function SettingsPage() {
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
         <h2 className="font-display text-2xl font-semibold text-charcoal">
-          Settings
+          Shop settings
         </h2>
         <p className="mt-1 text-sm text-muted">
-          Shop identity, VAT, and receipt defaults for Blessing Mall.
+          Business identity, VAT rate, and receipt wording. Changes apply to new
+          receipts immediately.
         </p>
       </div>
 

@@ -15,9 +15,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Blessing Mall SMS",
+  title: "Blessing Mall | Supermarket Management System",
   description:
-    "Supermarket management system for Blessing Mall — sales, stock, and staff in one place.",
+    "Secure supermarket operations for Blessing Mall — point of sale, inventory, purchasing, expenses, and reporting in Tanzanian Shillings.",
 };
 
 export default function RootLayout({

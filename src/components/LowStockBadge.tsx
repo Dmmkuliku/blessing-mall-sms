@@ -17,7 +17,7 @@ export function LowStockBadge({
       <span
         className={`inline-flex rounded-md bg-mint px-2 py-0.5 text-xs font-medium text-forest ${className}`}
       >
-        OK
+        In stock
       </span>
     );
   }
@@ -30,7 +30,7 @@ export function LowStockBadge({
           : "bg-amber-50 text-warning"
       } ${className}`}
     >
-      {critical ? "Critical" : "Low stock"}
+      {critical ? "Reorder urgently" : "Reorder soon"}
     </span>
   );
 }

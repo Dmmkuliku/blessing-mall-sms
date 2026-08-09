@@ -134,10 +134,10 @@ export default function ProductsPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h2 className="font-display text-2xl font-semibold text-charcoal">
-            Products · Stoki
+            Inventory
           </h2>
           <p className="text-sm text-muted">
-            Inventory list with reorder alerts.
+            Product catalogue with stock levels and reorder alerts.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">

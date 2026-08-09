@@ -20,7 +20,7 @@ export function ReceiptModal({
   sale,
   shopName = "Blessing Mall Supermarket",
   shopPhone,
-  footer = "Asante kwa kununua Blessing Mall!",
+  footer = "Thank you for shopping at Blessing Mall.",
 }: ReceiptModalProps) {
   if (!sale) return null;
 
@@ -32,7 +32,7 @@ export function ReceiptModal({
     <Modal
       open={open}
       onClose={onClose}
-      title="Receipt"
+      title="Customer receipt"
       footer={
         <div className="no-print flex justify-end gap-2">
           <button
@@ -59,7 +59,7 @@ export function ReceiptModal({
           </p>
           {shopPhone ? <p className="mt-1 text-muted">{shopPhone}</p> : null}
           <p className="mt-3 text-xs uppercase tracking-wider text-muted">
-            Mauzo / Sale receipt
+            Sales receipt
           </p>
         </div>
 

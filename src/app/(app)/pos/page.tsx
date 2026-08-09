@@ -24,7 +24,7 @@ export default function PosPage() {
   const [cart, setCart] = useState<CartLine[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("CASH");
   const [paidAmount, setPaidAmount] = useState("");
-  const [customerName, setCustomerName] = useState("Walk-in");
+  const [customerName, setCustomerName] = useState("Walk-in customer");
   const [vatRate, setVatRate] = useState(18);
   const [settings, setSettings] = useState<ShopSettings>({});
   const [busy, setBusy] = useState(false);
@@ -117,7 +117,7 @@ export default function PosPage() {
       const res = await api<{ sale: Sale }>("/api/sales", {
         method: "POST",
         json: {
-          customerName: customerName || "Walk-in",
+          customerName: customerName || "Walk-in customer",
           paymentMethod,
           paidAmount: paymentMethod === "CASH" ? paid || total : total,
           items: cart.map((l) => ({
@@ -129,7 +129,7 @@ export default function PosPage() {
       setCompletedSale(res.sale);
       setCart([]);
       setPaidAmount("");
-      setCustomerName("Walk-in");
+      setCustomerName("Walk-in customer");
       await loadProducts(query.trim() || undefined);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Sale failed");
@@ -185,7 +185,7 @@ export default function PosPage() {
               <div className="mt-3 flex items-end justify-between">
                 <Money amount={p.sellPrice} className="font-display text-lg font-semibold text-forest" />
                 <span className="text-xs text-muted">
-                  Stoki: {p.stockQty} {p.unit}
+                  In stock: {p.stockQty} {p.unit}
                 </span>
               </div>
             </button>
@@ -201,9 +201,11 @@ export default function PosPage() {
       <aside className="flex flex-col rounded-2xl border border-border bg-white">
         <div className="border-b border-border px-4 py-4">
           <h2 className="font-display text-xl font-semibold text-charcoal">
-            Cart · Mauzo
+            Sale cart
           </h2>
-          <p className="text-xs text-muted">{cart.length} line(s)</p>
+          <p className="text-xs text-muted">
+            {cart.length} line item{cart.length === 1 ? "" : "s"}
+          </p>
         </div>
 
         <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">

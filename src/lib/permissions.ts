@@ -44,7 +44,7 @@ export function defaultPathForRole(role: AppRole | string): string {
 export function roleLabel(role: AppRole | string): string {
   switch (role) {
     case "ATTENDANT":
-      return "Store Attendant";
+      return "Cashier";
     case "MANAGER":
       return "Store Manager";
     case "OWNER":

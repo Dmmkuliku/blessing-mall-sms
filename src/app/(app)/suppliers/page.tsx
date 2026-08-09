@@ -51,7 +51,7 @@ export default function SuppliersPage() {
             Suppliers
           </h2>
           <p className="mt-1 text-sm text-muted">
-            Wasambazaji — vendors who restock Blessing Mall shelves.
+            Maintain vendor contacts used for purchasing and stock replenishment.
           </p>
         </div>
         <button

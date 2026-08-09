@@ -94,11 +94,11 @@ export async function requireSession(roles?: Role[]) {
   } satisfies SessionUser;
 }
 
-export function unauthorized(message = "Unauthorized") {
+export function unauthorized(message = "Authentication required.") {
   return NextResponse.json({ error: message }, { status: 401 });
 }
 
-export function forbidden(message = "Forbidden") {
+export function forbidden(message = "You do not have permission for this action.") {
   return NextResponse.json({ error: message }, { status: 403 });
 }
 

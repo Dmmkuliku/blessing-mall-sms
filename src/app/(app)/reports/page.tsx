@@ -99,7 +99,7 @@ export default function ReportsPage() {
           Reports
         </h2>
         <p className="mt-1 text-sm text-muted">
-          Sales, product performance, and cash flow · Ripoti
+          Sales, product performance, and cash flow for the selected period.
         </p>
       </div>
 

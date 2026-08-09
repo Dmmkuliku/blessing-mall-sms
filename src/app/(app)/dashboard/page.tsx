@@ -69,10 +69,10 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div>
         <h2 className="font-display text-2xl font-semibold text-charcoal">
-          Today at Blessing Mall
+          Operations overview
         </h2>
         <p className="mt-1 text-sm text-muted">
-          Muhtasari wa mauzo, stoki, na gharama za leo.
+          Today&apos;s sales, stock alerts, and spending at a glance.
         </p>
       </div>
 
@@ -80,19 +80,19 @@ export default function DashboardPage() {
         <StatCard
           label="Today's sales"
           value={<Money amount={data.todaySales} />}
-          hint="Mauzo ya leo"
+          hint="Gross sales today"
           icon={<Banknote className="h-5 w-5" />}
         />
         <StatCard
           label="Transactions"
           value={data.todayTransactions}
-          hint="Idadi ya mauzo"
+          hint="Completed checkouts"
           icon={<Receipt className="h-5 w-5" />}
         />
         <StatCard
           label="Low stock"
           value={data.lowStockCount}
-          hint="Bidhaa zinazohitaji kuagiza"
+          hint="Items below reorder level"
           icon={<PackageX className="h-5 w-5" />}
         />
         <StatCard
@@ -100,7 +100,7 @@ export default function DashboardPage() {
           value={
             <Money amount={data.todayExpenses ?? data.monthExpenses ?? 0} />
           }
-          hint="Gharama"
+          hint="Operating costs today"
           icon={<AlertTriangle className="h-5 w-5" />}
         />
       </div>
@@ -110,7 +110,7 @@ export default function DashboardPage() {
           <h3 className="font-display text-lg font-semibold text-charcoal">
             Sales · last 7 days
           </h3>
-          <p className="mb-4 text-sm text-muted">Mauzo wiki hii</p>
+          <p className="mb-4 text-sm text-muted">Daily sales trend</p>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
@@ -150,7 +150,7 @@ export default function DashboardPage() {
 
         <section>
           <h3 className="mb-3 font-display text-lg font-semibold text-charcoal">
-            Low stock · Stoki chini
+            Low stock alerts
           </h3>
           <DataTable<Product>
             rows={data.lowStockProducts ?? []}
@@ -193,7 +193,7 @@ export default function DashboardPage() {
 
       <section>
         <h3 className="mb-3 font-display text-lg font-semibold text-charcoal">
-          Recent sales · Mauzo ya hivi karibuni
+          Recent sales
         </h3>
         <DataTable<Sale>
           rows={data.recentSales ?? []}

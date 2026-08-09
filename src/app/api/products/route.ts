@@ -4,19 +4,30 @@ import { prisma } from "@/lib/db";
 import { z } from "zod";
 
 const productSchema = z.object({
-  sku: z.string().min(1),
-  barcode: z.string().optional().nullable(),
-  name: z.string().min(1),
-  nameSw: z.string().optional().nullable(),
+  sku: z.string().min(1).max(64),
+  barcode: z.string().max(64).optional().nullable(),
+  name: z.string().min(1).max(160),
+  nameSw: z.string().max(160).optional().nullable(),
   categoryId: z.string().min(1),
   costPrice: z.number().nonnegative(),
   sellPrice: z.number().positive(),
   stockQty: z.number().nonnegative().optional(),
   reorderLevel: z.number().nonnegative().optional(),
-  unit: z.string().optional(),
-  vatRate: z.number().nonnegative().optional(),
+  unit: z.string().max(32).optional(),
+  vatRate: z.number().nonnegative().max(100).optional(),
   active: z.boolean().optional(),
 });
+
+function sanitizeProduct<T extends { costPrice?: number }>(
+  product: T,
+  role: string
+) {
+  if (role === "ATTENDANT") {
+    const { costPrice: _cost, ...rest } = product as T & { costPrice?: number };
+    return rest;
+  }
+  return product;
+}
 
 export async function GET(req: Request) {
   const session = await requireSession();
@@ -41,18 +52,23 @@ export async function GET(req: Request) {
     orderBy: { name: "asc" },
   });
 
-  const result = lowStock ? products.filter((p) => p.stockQty <= p.reorderLevel) : products;
-  return NextResponse.json({ products: result });
+  const filtered = lowStock
+    ? products.filter((p) => p.stockQty <= p.reorderLevel)
+    : products;
+
+  return NextResponse.json({
+    products: filtered.map((p) => sanitizeProduct(p, session.role)),
+  });
 }
 
 export async function POST(req: Request) {
   const session = await requireSession(["MANAGER", "OWNER"]);
-  if (!session) return unauthorized();
+  if (!session) return unauthorized("You do not have permission to add products.");
 
   const body = await req.json().catch(() => null);
   const parsed = productSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid product data", details: parsed.error.flatten() }, { status: 400 });
+    return NextResponse.json({ error: "Invalid product details." }, { status: 400 });
   }
 
   try {
@@ -75,6 +91,9 @@ export async function POST(req: Request) {
     });
     return NextResponse.json({ product }, { status: 201 });
   } catch {
-    return NextResponse.json({ error: "Could not create product (SKU/barcode may already exist)" }, { status: 409 });
+    return NextResponse.json(
+      { error: "Could not create product. SKU or barcode may already exist." },
+      { status: 409 }
+    );
   }
 }

@@ -60,7 +60,7 @@ export default function ExpensesPage() {
             Expenses
           </h2>
           <p className="mt-1 text-sm text-muted">
-            Track rent, utilities, transport, and other cash outflows.
+            Track rent, utilities, transport, and other operating costs.
           </p>
         </div>
         <button

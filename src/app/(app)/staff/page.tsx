@@ -13,7 +13,7 @@ import type { User } from "@/lib/types";
 const empty = {
   name: "",
   email: "",
-  password: "password123",
+  password: "",
   role: "ATTENDANT" as AppRole,
 };
 
@@ -63,10 +63,10 @@ export default function StaffPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h2 className="font-display text-2xl font-semibold text-charcoal">
-            Staff
+            Staff accounts
           </h2>
           <p className="mt-1 text-sm text-muted">
-            Role-based access like StockApp — attendant, manager, owner.
+            Manage cashier, manager, and owner access with least-privilege roles.
           </p>
         </div>
         {canInvite ? (
@@ -75,7 +75,7 @@ export default function StaffPage() {
             onClick={() => setOpen(true)}
             className="inline-flex items-center gap-2 rounded-xl bg-forest px-4 py-2.5 text-sm font-semibold text-white hover:bg-forest-dark"
           >
-            <Plus className="h-4 w-4" /> Invite staff
+            <Plus className="h-4 w-4" /> Add staff member
           </button>
         ) : null}
       </div>
@@ -114,7 +114,7 @@ export default function StaffPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title="Invite staff member"
+        title="Add staff member"
         footer={
           <div className="flex justify-end gap-2">
             <button
@@ -130,7 +130,7 @@ export default function StaffPage() {
               onClick={submit}
               className="rounded-xl bg-forest px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
             >
-              {busy ? "Saving…" : "Create account"}
+              {busy ? "Creating…" : "Create account"}
             </button>
           </div>
         }
@@ -145,7 +145,7 @@ export default function StaffPage() {
             />
           </label>
           <label className="block text-sm">
-            <span className="mb-1 block font-medium">Email</span>
+            <span className="mb-1 block font-medium">Work email</span>
             <input
               type="email"
               value={form.email}
@@ -156,12 +156,18 @@ export default function StaffPage() {
           <label className="block text-sm">
             <span className="mb-1 block font-medium">Temporary password</span>
             <input
+              type="password"
               value={form.password}
               onChange={(e) =>
                 setForm((f) => ({ ...f, password: e.target.value }))
               }
               className="w-full rounded-xl border border-border px-3 py-2"
+              autoComplete="new-password"
             />
+            <span className="mt-1 block text-xs text-muted">
+              At least 8 characters, including a letter and a number. Share
+              securely and ask the user to change it after first sign-in.
+            </span>
           </label>
           <label className="block text-sm">
             <span className="mb-1 block font-medium">Role</span>
@@ -172,7 +178,7 @@ export default function StaffPage() {
               }
               className="w-full rounded-xl border border-border px-3 py-2"
             >
-              <option value="ATTENDANT">Store Attendant</option>
+              <option value="ATTENDANT">Cashier</option>
               <option value="MANAGER">Store Manager</option>
               <option value="OWNER">Store Owner</option>
             </select>

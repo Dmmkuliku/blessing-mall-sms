@@ -79,7 +79,7 @@ export default function PurchasesPage() {
             Purchases
           </h2>
           <p className="mt-1 text-sm text-muted">
-            Record goods received from suppliers — stock increases automatically.
+            Record goods received from suppliers. Stock quantities update automatically.
           </p>
         </div>
         <button

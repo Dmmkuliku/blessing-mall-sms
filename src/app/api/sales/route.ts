@@ -1,22 +1,23 @@
 import { NextResponse } from "next/server";
-import { PaymentMethod, Prisma } from "@prisma/client";
+import { PaymentMethod } from "@prisma/client";
 import { requireSession, unauthorized } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { calcVatInclusive, roundMoney } from "@/lib/format";
 import { z } from "zod";
 
 const saleSchema = z.object({
-  customerName: z.string().optional().nullable(),
+  customerName: z.string().max(120).optional().nullable(),
   paymentMethod: z.nativeEnum(PaymentMethod),
   paidAmount: z.number().nonnegative(),
   items: z
     .array(
       z.object({
         productId: z.string(),
-        qty: z.number().positive(),
+        qty: z.number().positive().max(10000),
       })
     )
-    .min(1),
+    .min(1)
+    .max(100),
 });
 
 export async function GET(req: Request) {
@@ -111,7 +112,7 @@ export async function POST(req: Request) {
         data: {
           receiptNo,
           userId: session.id,
-          customerName: parsed.data.customerName || "Walk-in",
+          customerName: parsed.data.customerName || "Walk-in customer",
           paymentMethod: parsed.data.paymentMethod,
           subtotal,
           vatAmount,
@@ -127,14 +128,32 @@ export async function POST(req: Request) {
       });
     });
 
-    return NextResponse.json({ sale }, { status: 201 });
+    return NextResponse.json({
+      sale: {
+        ...sale,
+        items: sale.items.map((item) => {
+          const product =
+            session.role === "ATTENDANT" && item.product
+              ? (({ costPrice: _c, ...rest }) => rest)(item.product)
+              : item.product;
+          if (session.role === "ATTENDANT") {
+            const { costPrice: _cost, ...safeItem } = item;
+            return { ...safeItem, product };
+          }
+          return { ...item, product };
+        }),
+      },
+    }, { status: 201 });
   } catch (e) {
     if (e instanceof Error && e.message === "STOCK") {
-      return NextResponse.json({ error: "Stock changed during checkout. Retry." }, { status: 409 });
+      return NextResponse.json(
+        { error: "Stock levels changed during checkout. Please review the cart and try again." },
+        { status: 409 }
+      );
     }
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return NextResponse.json({ error: e.message }, { status: 400 });
-    }
-    return NextResponse.json({ error: "Checkout failed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Checkout could not be completed. Please try again." },
+      { status: 500 }
+    );
   }
 }
