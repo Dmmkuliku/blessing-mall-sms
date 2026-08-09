@@ -61,6 +61,18 @@ export default function HomePage() {
     let cancelled = false;
     (async () => {
       try {
+        const status = await api<{ setupComplete: boolean }>("/api/setup", {
+          skipAuthRedirect: true,
+        });
+        if (!cancelled && status.setupComplete === false) {
+          router.replace("/setup");
+          return;
+        }
+      } catch {
+        /* continue to login if status check fails */
+      }
+
+      try {
         const data = await api<{ user: User }>("/api/auth/me", {
           skipAuthRedirect: true,
         });

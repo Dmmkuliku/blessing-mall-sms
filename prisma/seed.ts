@@ -53,6 +53,7 @@ async function main() {
       { key: "currency", value: "TZS" },
       { key: "vat_rate", value: "18" },
       { key: "receipt_footer", value: "Thank you for shopping at Blessing Mall!" },
+      { key: "setup_complete", value: "1" },
     ],
   });
 

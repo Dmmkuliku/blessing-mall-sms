@@ -1,49 +1,30 @@
 # Blessing Mall Supermarket Management System
 
-Retail operations platform for **Blessing Mall** (Dar es Salaam, Tanzania), inspired by StockApp Africa workflows.
+Retail operations platform for **Blessing Mall** (Dar es Salaam, Tanzania).
+
+## Customer / institute laptop delivery
+
+For on-site Windows installation:
+
+1. Copy this folder to the laptop (example: `C:\BlessingMall\blessing-mall-sms`)
+2. Install Node.js LTS 20+ from https://nodejs.org
+3. Run `setup\install.bat`
+4. Use the Desktop shortcut **Blessing Mall SMS**
+5. Complete first-run setup in the browser
+
+Full instructions:
+- `docs/INSTALLATION_GUIDE.md`
+- `docs/USER_MANUAL.md`
+- `docs/DELIVERY_CHECKLIST.md`
 
 ## Capabilities
 
 - Role-based access: Cashier, Store Manager, Store Owner
-- Point of Sale with Cash, M-Pesa, Tigo Pesa, Airtel Money, HaloPesa, Card, and Bank
-- Inventory with low-stock alerts (TZS pricing, 18% VAT)
-- Purchases / goods received and supplier records
-- Expense tracking and cash-flow reports
-- Sales and product performance reports
-- Staff accounts and shop settings
-
-## Security practices
-
-- HTTP-only session cookies with secure flags in production
-- Password hashing (bcrypt)
-- Sign-in rate limiting
-- Role-based API authorisation
-- Cost prices hidden from cashier accounts
-- Security response headers (frame denial, nosniff, referrer policy, HSTS in production)
-- Generic authentication error messages to reduce account enumeration
-
-## Demo accounts (local / training only)
-
-Password for seeded demo users: `password123`
-
-| Role | Email |
-|------|-------|
-| Owner | owner@blessingmall.co.tz |
-| Manager | manager@blessingmall.co.tz |
-| Cashier | attendant@blessingmall.co.tz |
-
-Change these passwords before any live store use. Do not process real card or mobile-money secrets in the demo environment.
-
-## Local setup
-
-```bash
-npm install
-npm run db:setup
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
+- Point of Sale (Cash, M-Pesa, Tigo Pesa, Airtel Money, HaloPesa, Card, Bank)
+- Inventory with low-stock alerts (TZS, 18% VAT)
+- Purchases, suppliers, expenses, reports
+- First-run setup wizard for customer handover
 
 ## Stack
 
-Next.js 15 · Prisma · SQLite · Tailwind CSS · Recharts
+TypeScript · Next.js 15 · React 19 · Prisma · SQLite · Tailwind CSS

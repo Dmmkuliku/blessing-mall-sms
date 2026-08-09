@@ -39,6 +39,13 @@ yarn-error.log*
 prisma/*.db
 prisma/*.db-journal
 !prisma/seed.db
+/data/
+/logs/
+*.log
+
+# local runtime
+START Blessing Mall.bat
+STOP Blessing Mall.bat
 
 # vercel
 .vercel

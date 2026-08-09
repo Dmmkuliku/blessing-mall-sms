@@ -9,7 +9,10 @@
     "lint": "eslint",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed:delivery": "tsx prisma/seed-delivery.ts",
     "db:setup": "prisma db push && tsx prisma/seed.ts",
+    "db:setup:delivery": "prisma db push && tsx prisma/seed-delivery.ts",
+    "setup:laptop": "powershell -NoProfile -ExecutionPolicy Bypass -File ./setup/install.ps1",
     "postinstall": "prisma generate"
   },
   "prisma": {
