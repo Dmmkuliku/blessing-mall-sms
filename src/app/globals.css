@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+:root {
+  --forest: #0b6e4f;
+  --forest-dark: #08553c;
+  --forest-light: #12805c;
+  --charcoal: #1a1f1c;
+  --mint: #eef7f2;
+  --mint-deep: #d8eee3;
+  --gold: #c9a227;
+  --gold-soft: #f5ecd0;
+  --cream: #f7faf8;
+  --border: #c9ddd3;
+  --muted: #5c6b63;
+  --danger: #b42318;
+  --warning: #b54708;
+  --background: var(--cream);
+  --foreground: var(--charcoal);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-forest: var(--forest);
+  --color-forest-dark: var(--forest-dark);
+  --color-forest-light: var(--forest-light);
+  --color-charcoal: var(--charcoal);
+  --color-mint: var(--mint);
+  --color-mint-deep: var(--mint-deep);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-cream: var(--cream);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-fraunces);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--forest) 25%, white);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.55s ease-out both;
+}
+
+.animate-fade-up-delay {
+  animation: fade-up 0.65s ease-out 0.12s both;
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 5s ease-in-out infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.35s ease-out both;
+}
+
+.leaf-pattern {
+  background-image:
+    radial-gradient(
+      circle at 12% 18%,
+      color-mix(in srgb, var(--gold) 18%, transparent) 0,
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 12%,
+      color-mix(in srgb, white 16%, transparent) 0,
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      #0b6e4f 0%,
+      #0a5f44 42%,
+      #084f38 78%,
+      #0b6e4f 100%
+    );
+}
+
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .receipt-print,
+  .receipt-print * {
+    visibility: visible !important;
+  }
+
+  .receipt-print {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    background: white !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ATTENDANT
+  MANAGER
+  OWNER
+}
+
+enum PaymentMethod {
+  CASH
+  MPESA
+  TIGO_PESA
+  AIRTEL_MONEY
+  HALOPESA
+  CARD
+  BANK
+}
+
+enum PurchaseStatus {
+  DRAFT
+  RECEIVED
+  CANCELLED
+}
+
+enum StockMoveType {
+  PURCHASE
+  SALE
+  ADJUST
+  RETURN
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(ATTENDANT)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  sales        Sale[]
+  purchases    Purchase[]
+  expenses     Expense[]
+  movements    StockMovement[]
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  nameSw    String?
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id           String          @id @default(cuid())
+  sku          String          @unique
+  barcode      String?         @unique
+  name         String
+  nameSw       String?
+  categoryId   String
+  category     Category        @relation(fields: [categoryId], references: [id])
+  costPrice    Float           @default(0)
+  sellPrice    Float
+  stockQty     Float           @default(0)
+  reorderLevel Float           @default(10)
+  unit         String          @default("pcs")
+  vatRate      Float           @default(18)
+  active       Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  saleItems    SaleItem[]
+  purchaseItems PurchaseItem[]
+  movements    StockMovement[]
+}
+
+model Supplier {
+  id        String     @id @default(cuid())
+  name      String
+  phone     String?
+  email     String?
+  address   String?
+  active    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  purchases Purchase[]
+}
+
+model Purchase {
+  id         String         @id @default(cuid())
+  reference  String         @unique
+  supplierId String
+  supplier   Supplier       @relation(fields: [supplierId], references: [id])
+  userId     String
+  user       User           @relation(fields: [userId], references: [id])
+  status     PurchaseStatus @default(RECEIVED)
+  totalCost  Float          @default(0)
+  notes      String?
+  createdAt  DateTime       @default(now())
+  items      PurchaseItem[]
+}
+
+model PurchaseItem {
+  id         String   @id @default(cuid())
+  purchaseId String
+  purchase   Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  qty        Float
+  unitCost   Float
+}
+
+model Sale {
+  id            String        @id @default(cuid())
+  receiptNo     String        @unique
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  customerName  String?
+  paymentMethod PaymentMethod @default(CASH)
+  subtotal      Float
+  vatAmount     Float
+  total         Float
+  paidAmount    Float
+  changeAmount  Float         @default(0)
+  createdAt     DateTime      @default(now())
+  items         SaleItem[]
+}
+
+model SaleItem {
+  id        String  @id @default(cuid())
+  saleId    String
+  sale      Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  qty       Float
+  unitPrice Float
+  costPrice Float
+  vatRate   Float   @default(18)
+  lineTotal Float
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  category    String
+  description String
+  amount      Float
+  spentAt     DateTime @default(now())
+  createdAt   DateTime @default(now())
+}
+
+model StockMovement {
+  id        String        @id @default(cuid())
+  productId String
+  product   Product       @relation(fields: [productId], references: [id])
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+  type      StockMoveType
+  qty       Float
+  note      String?
+  createdAt DateTime      @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}

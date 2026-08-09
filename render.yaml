@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: blessing-mall-sms
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        value: file:./prisma/prod.db
+      - key: NEXT_PUBLIC_SHOP_NAME
+        value: Blessing Mall
+      - key: NODE_VERSION
+        value: "22"
