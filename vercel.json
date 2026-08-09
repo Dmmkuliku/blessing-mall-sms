@@ -1,0 +1,9 @@
+{
+  "experimentalServices": {
+    "blessing-mall-sms": {
+      "type": "web",
+      "routePrefix": "/",
+      "framework": "nextjs"
+    }
+  }
+}

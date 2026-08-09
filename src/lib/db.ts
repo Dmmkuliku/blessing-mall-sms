@@ -75,7 +75,6 @@ async function seedIfEmpty() {
       { key: "vat_rate", value: "18" },
       { key: "receipt_footer", value: "Asante kwa kununua Blessing Mall!" },
     ],
-    skipDuplicates: true,
   });
 
   const bev = await prisma.category.create({
